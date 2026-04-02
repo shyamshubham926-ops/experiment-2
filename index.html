@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Profile Card</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --accent-cyan: #22d3ee;
+            --accent-gold: #fbbf24;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+                radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* The Card Container */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            width: 380px;
+            padding: 40px 0 0 0;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            position: relative;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+        }
+
+        /* Pro Badge */
+        .badge {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            background: var(--accent-gold);
+            color: #000;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 6px;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
+        }
+
+        /* Profile Image */
+        .profile-img-wrapper {
+            width: 130px;
+            height: 130px;
+            margin: 0 auto 24px;
+            border-radius: 50%;
+            padding: 4px;
+            background: linear-gradient(45deg, var(--accent-cyan), transparent, var(--accent-cyan));
+            position: relative;
+        }
+
+        .profile-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #1e293b;
+        }
+
+        /* User Info */
+        .user-info {
+            text-align: center;
+            padding: 0 30px;
+        }
+
+        .user-name {
+            color: var(--text-primary);
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .user-location {
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .user-bio {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        /* Action Buttons */
+        .actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            padding: 0 30px 40px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            border: 1px solid transparent;
+        }
+
+        .btn-message {
+            background: var(--accent-cyan);
+            color: #083344;
+            border-color: var(--accent-cyan);
+        }
+
+        .btn-message:hover {
+            background: transparent;
+            color: var(--accent-cyan);
+            box-shadow: 0 0 20px rgba(34, 211, 238, 0.4);
+        }
+
+        .btn-following {
+            background: transparent;
+            color: var(--accent-cyan);
+            border-color: rgba(34, 211, 238, 0.5);
+        }
+
+        .btn-following:hover {
+            background: rgba(34, 211, 238, 0.1);
+            border-color: var(--accent-cyan);
+        }
+
+        /* Skills Footer */
+        .skills-container {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 25px 30px 35px;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .skills-label {
+            color: var(--text-secondary);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .skill-tag {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .skill-tag:hover {
+            background: rgba(34, 211, 238, 0.1);
+            border-color: var(--accent-cyan);
+            color: var(--text-primary);
+            transform: scale(1.05);
+        }
+
+        /* Custom Scrollbar for the tags if they overflow */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--glass-border);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <article class="card">
+        <span class="badge">PRO</span>
+        
+        <div class="profile-img-wrapper">
+            <!-- Using a high-quality placeholder. Replace with your custom image URL -->
+            <img src="Shubham.jpeg" alt="Ricky Park">
+        </div>
+
+        <section class="user-info">
+            <h1 class="user-name">Shubham Shyam</h1>
+            <p class="user-location">Shimla, India</p>
+            <p class="user-bio">
+                User interface designer and<br>
+                front-end developer
+            </p>
+        </section>
+
+        <div class="actions">
+            <button class="btn btn-message">Message</button>
+            <button class="btn btn-following">Following</button>
+        </div>
+
+        <footer class="skills-container">
+            <span class="skills-label">SKILLS</span>
+            <div class="skills-list">
+                <span class="skill-tag">UI / UX</span>
+                <span class="skill-tag">Front End Development</span>
+                <span class="skill-tag">HTML</span>
+                <span class="skill-tag">CSS</span>
+                <span class="skill-tag">JavaScript</span>
+                <span class="skill-tag">React</span>
+                <span class="skill-tag">Node</span>
+            </div>
+        </footer>
+    </article>
+
+</body>
+</html>
